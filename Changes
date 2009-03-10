@@ -1,0 +1,22 @@
+POE::Filter::IRCD
+=================
+
+2.38	Removed kwalitee test and added license information.
+2.36	Kwalitee fixes.
+2.35	Changed test file naming convention
+2.34	Added clone() method as reported by Hinrik √rn Sigur√∞sson.
+2.32	Updated Module::Install to 0.68
+2.31	Fixed abstract_from and build_requires in Makefile.PL
+2.30	Code refactoring. Doc fixes. Updated tests.
+2.2	Switched fully to Module::Install. Documentation amendments.
+2.0	Makefile.PL was executable. Fixed.
+1.9	Added pod and pod coverage tests. Documentation fixes.
+1.8	Added get_pending() method.
+1.7	Bug in put() that choked when {params} didn't exist.
+1.6	Inherits from POE::Filter now so it won't barf when Stackable
+	is updated.
+1.5	Added colonify options, check pod for details.
+1.4	{raw_line} added to resultant hashref.
+1.3	Documentation amendments.
+1.2	Updated testcase. Should be a bit more robust now.
+1.1	Initial Release

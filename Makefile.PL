@@ -1,0 +1,13 @@
+use 5.006;
+use strict;
+use inc::Module::Install;
+name 'POE-Filter-IRCD';
+author 'Chris Williams <chris@bingosnet.co.uk>';
+version_from 'lib/POE/Filter/IRCD.pm';
+abstract_from 'lib/POE/Filter/IRCD.pm';
+license 'perl';
+perl_version '5.006';
+build_requires 'Test::More' => 0.47;
+requires 'POE' => 0.3202;
+requires 'POE::Filter' => 0;
+WriteAll;
