@@ -1,6 +1,7 @@
 Changes
 examples/irc.pl
 inc/Module/Install.pm
+inc/Module/Install/AutoLicense.pm
 inc/Module/Install/Base.pm
 inc/Module/Install/Can.pm
 inc/Module/Install/Fetch.pm
