@@ -10,4 +10,6 @@ perl_version '5.006';
 build_requires 'Test::More' => 0.47;
 requires 'POE' => 0.3202;
 requires 'POE::Filter' => 0;
+auto_license holder => 'Chris Williams and Jonathan Steinert';
+eval "auto_set_repository";
 WriteAll;

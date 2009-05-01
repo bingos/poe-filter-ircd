@@ -6,7 +6,7 @@ use Carp;
 use vars qw($VERSION);
 use base qw(POE::Filter);
 
-$VERSION = '2.38';
+$VERSION = '2.40';
 
 sub _PUT_LITERAL () { 1 }
 
@@ -214,7 +214,7 @@ A standalone version exists as L<Parse::IRC>.
 
 =over
 
-=item new
+=item C<new>
 
 Creates a new POE::Filter::IRCD object. Takes two optional arguments: 
 
@@ -228,13 +228,13 @@ Creates a new POE::Filter::IRCD object. Takes two optional arguments:
 
 =over
 
-=item get_one_start
+=item C<get_one_start>
 
-=item get_one
+=item C<get_one>
 
-=item get_pending
+=item C<get_pending>
 
-=item get
+=item C<get>
 
 Takes an arrayref which is contains lines of IRC formatted input. Returns an arrayref of hashrefs
 which represents the lines. The hashref contains the following fields:
@@ -255,7 +255,7 @@ For example, if the filter receives the following line, the following hashref is
 		raw_line => ':moo.server.net 001 lamebot :Welcome to the IRC network lamebot',
 	   }
 
-=item put
+=item C<put>
 
 Takes an arrayref containing hashrefs of IRC data and returns an arrayref containing IRC formatted lines.
 Optionally, one can specify 'colonify' to override the global colonification option.
@@ -270,11 +270,11 @@ eg.
 
   $filter->put( [ $hashref ] );
 
-=item clone
+=item C<clone>
 
 Makes a copy of the filter, and clears the copy's buffer.
 
-=item debug
+=item C<debug>
 
 With a true or false argument, enables or disables debug output respectively. Without an argument the behaviour is to toggle the debug status.
 
@@ -290,7 +290,7 @@ Jonathan Steinert
 
 =head1 LICENSE
 
-Copyright C<(c)> Chris Williams and Jonathan Steinert
+Copyright E<copy> Chris Williams and Jonathan Steinert
 
 This module may be used, modified, and distributed under the same terms as Perl itself. Please see the license that came with your Perl distribution for details.
 
@@ -309,4 +309,3 @@ L<POE::Component::IRC>
 L<Parse::IRC>
 
 =cut
-
