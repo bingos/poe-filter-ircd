@@ -37,7 +37,7 @@ my $irc_regex = qr/^
         $g->{'space'}
         [^\x00\x0a\x0d\x20\x3a]
         [^\x00\x0a\x0d\x20]*
-      ){0,13}           # then match on 0-13 of these,
+      )*                # then match as many of these as possible
     )
   )?                    # otherwise dont match at all.
   (?:

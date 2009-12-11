@@ -1,6 +1,7 @@
 POE::Filter::IRCD
 =================
 
+2.42	Allow 005 numerics with more than 13 parameters.
 2.40	Changed to AutoLicense, tidied up the POD.
 2.38	Removed kwalitee test and added license information.
 2.36	Kwalitee fixes.
