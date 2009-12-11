@@ -6,7 +6,7 @@ use Carp;
 use vars qw($VERSION);
 use base qw(POE::Filter);
 
-$VERSION = '2.40';
+$VERSION = '2.42';
 
 sub _PUT_LITERAL () { 1 }
 

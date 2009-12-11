@@ -37,4 +37,3 @@ foreach my $irc_event ( @{ $filter3->get( [ $original2 ] ) } ) {
 	ok( $parsed eq $original2, 'Self Test' );
   }
 }
-
