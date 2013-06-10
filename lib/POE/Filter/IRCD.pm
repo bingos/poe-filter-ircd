@@ -1,12 +1,11 @@
 package POE::Filter::IRCD;
 
+#ABSTRACT: A POE-based parser for the IRC protocol
+
 use strict;
 use warnings;
 use Carp;
-use vars qw($VERSION);
-use base qw(POE::Filter);
-
-$VERSION = '2.42';
+use base qw[POE::Filter];
 
 sub _PUT_LITERAL () { 1 }
 
@@ -92,7 +91,7 @@ sub get {
       push @{$event->{'params'}}, (split /$g->{'space'}/, $middles) if defined $middles;
       push @{$event->{'params'}}, $trailing if defined $trailing;
       push @$events, $event;
-    } 
+    }
     else {
       warn "Received line $raw_line that is not IRC protocol\n";
     }
@@ -125,7 +124,7 @@ sub get_one {
       push @{$event->{'params'}}, (split /$g->{'space'}/, $middles) if defined $middles;
       push @{$event->{'params'}}, $trailing if defined $trailing;
       push @$events, $event;
-    } 
+    }
     else {
       warn "Received line $raw_line that is not IRC protocol\n";
     }
@@ -170,11 +169,11 @@ sub put {
 	}
         push @$raw_lines, $raw_line;
         warn "<-$raw_line \n" if $self->{DEBUG};
-      } 
+      }
       else {
         next;
       }
-    } 
+    }
     else {
       warn __PACKAGE__ . " non hashref passed to put(): \"$event\"\n";
       push @$raw_lines, $event if ref $event eq 'SCALAR';
@@ -210,11 +209,7 @@ sub _checkargs {
 
 1;
 
-__END__
-
-=head1 NAME
-
-POE::Filter::IRCD - A POE-based parser for the IRC protocol.
+=pod
 
 =head1 SYNOPSIS
 
@@ -242,7 +237,7 @@ A standalone version exists as L<Parse::IRC>.
 
 =item C<new>
 
-Creates a new POE::Filter::IRCD object. Takes two optional arguments: 
+Creates a new POE::Filter::IRCD object. Takes two optional arguments:
 
   'debug', which will print all lines received to STDERR;
   'colonify', set to 1 to force the filter to always colonify the last param passed in a put(),
@@ -268,7 +263,7 @@ which represents the lines. The hashref contains the following fields:
   prefix
   command
   params ( this is an arrayref )
-  raw_line 
+  raw_line
 
 For example, if the filter receives the following line, the following hashref is produced:
 
@@ -287,9 +282,9 @@ Takes an arrayref containing hashrefs of IRC data and returns an arrayref contai
 Optionally, one can specify 'colonify' to override the global colonification option.
 eg.
 
-  $hashref = { 
-		command => 'PRIVMSG', 
-		prefix => 'FooBar!foobar@foobar.com', 
+  $hashref = {
+		command => 'PRIVMSG',
+		prefix => 'FooBar!foobar@foobar.com',
 		params => [ '#foobar', 'boo!' ],
 		colonify => 1, # Override the global colonify option for this record only.
 	      };
@@ -305,20 +300,6 @@ Makes a copy of the filter, and clears the copy's buffer.
 With a true or false argument, enables or disables debug output respectively. Without an argument the behaviour is to toggle the debug status.
 
 =back
-
-=head1 MAINTAINER
-
-Chris Williams <chris@bingosnet.co.uk>
-
-=head1 AUTHOR
-
-Jonathan Steinert
-
-=head1 LICENSE
-
-Copyright E<copy> Chris Williams and Jonathan Steinert
-
-This module may be used, modified, and distributed under the same terms as Perl itself. Please see the license that came with your Perl distribution for details.
 
 =head1 SEE ALSO
 
