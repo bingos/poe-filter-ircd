@@ -19,6 +19,11 @@ my $g = {
 
 my $irc_regex = qr/^
   (?:
+    \x40                # '@'-prefixed IRCv3.2 messsage tags.
+    (\S+)               # [tags] Semi-colon delimited key=value list
+    $g->{space}
+  )?
+  (?:
     \x3a                #  : comes before hand
     (\S+)               #  [prefix]
     $g->{'space'}       #  Followed by a space
@@ -73,8 +78,14 @@ sub get {
 
   foreach my $raw_line (@$raw_lines) {
     warn "->$raw_line \n" if $self->{DEBUG};
-    if ( my($prefix, $command, $middles, $trailing) = $raw_line =~ m/$irc_regex/ ) {
+    if ( my($tags, $prefix, $command, $middles, $trailing) = $raw_line =~ m/$irc_regex/ ) {
       my $event = { raw_line => $raw_line };
+      if ($tags) {
+        for my $tag_pair (split /;/, $tags) {
+          my ($thistag, $thisval) = split /=/, $tag_pair;
+          $event->{tags}->{$thistag} = $thisval
+        }
+      }
       $event->{'prefix'} = $prefix if $prefix;
       $event->{'command'} = uc $command;
       $event->{'params'} = [] if defined ( $middles ) || defined ( $trailing );
@@ -100,8 +111,14 @@ sub get_one {
 
   if ( my $raw_line = shift ( @{ $self->{BUFFER} } ) ) {
     warn "->$raw_line \n" if $self->{DEBUG};
-    if ( my($prefix, $command, $middles, $trailing) = $raw_line =~ m/$irc_regex/ ) {
+    if ( my($tags, $prefix, $command, $middles, $trailing) = $raw_line =~ m/$irc_regex/ ) {
       my $event = { raw_line => $raw_line };
+      if ($tags) {
+        for my $tag_pair (split /;/, $tags) {
+          my ($thistag, $thisval) = split /=/, $tag_pair;
+          $event->{tags}->{$thistag} = $thisval
+        }
+      }
       $event->{'prefix'} = $prefix if $prefix;
       $event->{'command'} = uc $command;
       $event->{'params'} = [] if defined ( $middles ) || defined ( $trailing );
@@ -129,6 +146,15 @@ sub put {
       my $colonify = ( defined $event->{colonify} ? $event->{colonify} : $self->{COLONIFY} );
       if ( _PUT_LITERAL || _checkargs($event) ) {
         my $raw_line = '';
+        if ( ref $event->{tags} eq 'HASH' && keys %{ $event->{tags} } ) {
+          $raw_line .= '@';
+          my @tags = %{ $event->{tags} };
+          while (my ($thistag, $thisval) = splice @tags, 0, 2) {
+            $raw_line .= $thistag . ( defined $thisval ? '='.$thisval : '' );
+            $raw_line .= ';' if @tags;
+          }
+          $raw_line .= ' ';
+        }
         $raw_line .= (':' . $event->{'prefix'} . ' ') if exists $event->{'prefix'};
         $raw_line .= $event->{'command'};
 	if ( $event->{'params'} and ref $event->{'params'} eq 'ARRAY' ) {
